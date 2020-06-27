@@ -15,20 +15,22 @@ module uart(input wire [7:0] data_in,
 
 wire rxclk_en, txclk_en;
 
-baud_rate_gen uart_baud(.clk_50mhz(clk_50mhz),
-			.rxclk_en(rxclk_en),
-			.txclk_en(txclk_en));
-transmitter uart_tx(.data_in(data_in),
-		    .write_enable(write_enable),
-		    .clk_50mhz(clk_50mhz),
-		    .clken(txclk_en),
-		    .tx(tx),
-		    .tx_busy(tx_busy));
-receiver uart_rx(.rx(rx),
-		 .ready(ready),
-		 .ready_clr(ready_clr),
-		 .clk_50mhz(clk_50mhz),
-		 .clken(rxclk_en),
-		 .data(data_out));
+baud_rate br(.clk_50mhz(clk_50mhz),
+	     .rxclk_en(rxclk_en),
+	     .txclk_en(txclk_en));
+
+transmitter tx(.data_in(data_in),
+	       .write_enable(write_enable),
+	       .clk_50mhz(clk_50mhz),
+	       .clken(txclk_en),
+	       .tx(tx),
+	       .tx_busy(tx_busy));
+
+receiver rx(.rx(rx),
+	    .ready(ready),
+	    .ready_clr(ready_clr),
+	    .clk_50mhz(clk_50mhz),
+  	    .clken(rxclk_en),
+	    .data(data_out));
 
 endmodule
